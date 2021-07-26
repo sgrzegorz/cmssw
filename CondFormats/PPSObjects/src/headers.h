@@ -15,3 +15,4 @@
 #include "CondFormats/PPSObjects/interface/PPSPixelTopology.h"
 
 #include "CondFormats/PPSObjects/interface/PPSAlignmentConfig.h"
+#include "CondFormats/PPSObjects/interface/PPSAssociationCuts.h"
