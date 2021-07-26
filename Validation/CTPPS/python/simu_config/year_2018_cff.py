@@ -1,6 +1,8 @@
 import FWCore.ParameterSet.Config as cms
 
 from Validation.CTPPS.simu_config.base_cff import *
+import CalibPPS.ESProducers.ppsAssociationCuts_cff as ac
+ac.use_single_infinite_iov_entry(ac.ppsAssociationCutsESSource,ac.p2018)
 
 # base profile settings for 2018
 profile_base_2018 = profile_base.clone(
