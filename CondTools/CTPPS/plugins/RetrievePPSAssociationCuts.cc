@@ -21,21 +21,21 @@
 
 class RetrievePPSAssociationCuts : public edm::one::EDAnalyzer<> {
 public:
-    explicit RetrievePPSAssociationCuts(const edm::ParameterSet &);
+  explicit RetrievePPSAssociationCuts(const edm::ParameterSet &);
 
 private:
-    void analyze(const edm::Event &, const edm::EventSetup &) override;
+  void analyze(const edm::Event &, const edm::EventSetup &) override;
 
-    edm::ESGetToken<PPSAssociationCuts, PPSAssociationCutsRcd> esToken_;
+  edm::ESGetToken<PPSAssociationCuts, PPSAssociationCutsRcd> esToken_;
 };
 
 RetrievePPSAssociationCuts::RetrievePPSAssociationCuts(const edm::ParameterSet &iConfig) : esToken_(esConsumes()) {}
 
 void RetrievePPSAssociationCuts::analyze(const edm::Event &iEvent, const edm::EventSetup &iSetup) {
-    // get the data
-    const auto &ppsAssociationCuts= iSetup.getData(esToken_);
+  // get the data
+  const auto &ppsAssociationCuts = iSetup.getData(esToken_);
 
-    edm::LogInfo("PPS") << ppsAssociationCuts;
+  edm::LogInfo("PPS") << ppsAssociationCuts;
 }
 
 //define this as a plug-in

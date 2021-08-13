@@ -22,29 +22,29 @@
 
 class WritePPSAssociationCuts : public edm::one::EDAnalyzer<> {
 public:
-    explicit WritePPSAssociationCuts(const edm::ParameterSet &);
+  explicit WritePPSAssociationCuts(const edm::ParameterSet &);
 
 private:
-    void analyze(const edm::Event &, const edm::EventSetup &) override;
+  void analyze(const edm::Event &, const edm::EventSetup &) override;
 
-    edm::ESGetToken <PPSAssociationCuts, PPSAssociationCutsRcd> esToken_;
+  edm::ESGetToken<PPSAssociationCuts, PPSAssociationCutsRcd> esToken_;
 };
 
 WritePPSAssociationCuts::WritePPSAssociationCuts(const edm::ParameterSet &iConfig)
-        : esToken_(esConsumes<PPSAssociationCuts, PPSAssociationCutsRcd>(edm::ESInputTag("", iConfig.getParameter<std::string>("label"))))
-        {}
+    : esToken_(esConsumes<PPSAssociationCuts, PPSAssociationCutsRcd>(
+          edm::ESInputTag("", iConfig.getParameter<std::string>("label")))) {}
 
 void WritePPSAssociationCuts::analyze(const edm::Event &iEvent, const edm::EventSetup &iSetup) {
-    // get the data
-    const auto &ppsAssociationCuts = iSetup.getData(esToken_);
+  // get the data
+  const auto &ppsAssociationCuts = iSetup.getData(esToken_);
 
-    // store the data in a DB object
-    edm::Service <cond::service::PoolDBOutputService> poolDbService;
-    if (poolDbService.isAvailable()) {
-        poolDbService->writeOne(&ppsAssociationCuts, poolDbService->currentTime(), "PPSAssociationCutsRcd");
-    } else {
-        throw cms::Exception("WritePPSAssociationCuts") << "PoolDBService required.";
-    }
+  // store the data in a DB object
+  edm::Service<cond::service::PoolDBOutputService> poolDbService;
+  if (poolDbService.isAvailable()) {
+    poolDbService->writeOne(&ppsAssociationCuts, poolDbService->currentTime(), "PPSAssociationCutsRcd");
+  } else {
+    throw cms::Exception("WritePPSAssociationCuts") << "PoolDBService required.";
+  }
 }
 
 //define this as a plug-in

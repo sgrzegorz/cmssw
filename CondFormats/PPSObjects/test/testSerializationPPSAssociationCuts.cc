@@ -2,10 +2,9 @@
 
 #include "CondFormats/PPSObjects/src/headers.h"
 
-int main()
-{
-    testSerialization<PPSAssociationCuts>();
-    testSerialization<PPSAssociationCuts::CutsPerArm>();
-    testSerialization<std::map<unsigned int, PPSAssociationCuts>>();
-    testSerialization<std::map<unsigned int, PPSAssociationCuts::CutsPerArm>>();
+int main() {
+  testSerialization<PPSAssociationCuts>();
+  testSerialization<PPSAssociationCuts::CutsPerArm>();
+  testSerialization<std::map<unsigned int, PPSAssociationCuts>>();
+  testSerialization<std::map<unsigned int, PPSAssociationCuts::CutsPerArm>>();
 }

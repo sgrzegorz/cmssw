@@ -22,7 +22,6 @@
 #include "CondFormats/PPSObjects/interface/PPSAssociationCuts.h"
 #include "CondFormats/DataRecord/interface/PPSAssociationCutsRcd.h"
 
-
 REGISTER_PLUGIN(CTPPSBeamParametersRcd, CTPPSBeamParameters);
 REGISTER_PLUGIN(CTPPSPixelDAQMappingRcd, CTPPSPixelDAQMapping);
 REGISTER_PLUGIN(CTPPSPixelAnalysisMaskRcd, CTPPSPixelAnalysisMask);
@@ -35,4 +34,3 @@ REGISTER_PLUGIN(CTPPSOpticsRcd, LHCOpticalFunctionsSetCollection);
 REGISTER_PLUGIN(PPSDirectSimulationDataRcd, PPSDirectSimulationData);
 REGISTER_PLUGIN(PPSPixelTopologyRcd, PPSPixelTopology);
 REGISTER_PLUGIN(PPSAssociationCutsRcd, PPSAssociationCuts);
-
