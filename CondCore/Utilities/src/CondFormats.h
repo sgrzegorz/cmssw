@@ -32,6 +32,7 @@
 #include "CondFormats/PPSObjects/interface/CTPPSPixelAnalysisMask.h"
 #include "CondFormats/PPSObjects/interface/CTPPSPixelGainCalibrations.h"
 #include "CondFormats/PPSObjects/interface/CTPPSRPAlignmentCorrectionsData.h"
+#include "CondFormats/PPSObjects/interface/PPSAssociationCuts.h"
 #include "CondFormats/PPSObjects/interface/PPSTimingCalibration.h"
 #include "CondFormats/PPSObjects/interface/LHCOpticalFunctionsSetCollection.h"
 #include "CondFormats/PPSObjects/interface/PPSAlignmentConfig.h"
