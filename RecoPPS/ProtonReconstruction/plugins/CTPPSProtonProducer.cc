@@ -300,17 +300,13 @@ void CTPPSProtonProducer::produce(edm::Event &iEvent, const edm::EventSetup &iSe
 
               bool matching = true;
 
-              if (ac.isApplied(ac.qX) &&
-                  !ac.isSatisfied(ac.qX, tr_i.x(), tr_i.y(), hLHCInfo->crossingAngle(), tr_i.x() - tr_j.x()))
+              if (!ac.isSatisfied(ac.qX, tr_i.x(), tr_i.y(), hLHCInfo->crossingAngle(), tr_i.x() - tr_j.x()))
                 matching = false;
-              else if (ac.isApplied(ac.qY) &&
-                       !ac.isSatisfied(ac.qY, tr_i.x(), tr_i.y(), hLHCInfo->crossingAngle(), tr_i.y() - tr_j.y()))
+              else if (!ac.isSatisfied(ac.qY, tr_i.x(), tr_i.y(), hLHCInfo->crossingAngle(), tr_i.y() - tr_j.y()))
                 matching = false;
-              else if (ac.isApplied(ac.qXi) &&
-                       !ac.isSatisfied(ac.qXi, tr_i.x(), tr_i.y(), hLHCInfo->crossingAngle(), pr_i.xi() - pr_j.xi()))
+              else if (!ac.isSatisfied(ac.qXi, tr_i.x(), tr_i.y(), hLHCInfo->crossingAngle(), pr_i.xi() - pr_j.xi()))
                 matching = false;
-              else if (ac.isApplied(ac.qThetaY) &&
-                       !ac.isSatisfied(
+              else if (!ac.isSatisfied(
                            ac.qThetaY, tr_i.x(), tr_i.y(), hLHCInfo->crossingAngle(), pr_i.thetaY() - pr_j.thetaY()))
                 matching = false;
 

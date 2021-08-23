@@ -12,16 +12,16 @@ edm::ParameterSetDescription PPSAssociationCuts::getDefaultParameters() {
   edm::ParameterSetDescription desc;
 
   desc.add<std::string>("x_cut_mean", "")->setComment("mean of track-association cut in x, mm");
-  desc.add<std::string>("x_cut_treshold", "")->setComment("threshold of track-association cut in x, mm");
+  desc.add<std::string>("x_cut_threshold", "")->setComment("threshold of track-association cut in x, mm");
 
   desc.add<std::string>("y_cut_mean", "")->setComment("mean of track-association cut in y, mm");
-  desc.add<std::string>("y_cut_treshold", "")->setComment("threshold of track-association cut in y, mm");
+  desc.add<std::string>("y_cut_threshold", "")->setComment("threshold of track-association cut in y, mm");
 
   desc.add<std::string>("xi_cut_mean", "")->setComment("mean of track-association cut in xi");
-  desc.add<std::string>("xi_cut_treshold", "")->setComment("threshold of track-association cut in xi");
+  desc.add<std::string>("xi_cut_threshold", "")->setComment("threshold of track-association cut in xi");
 
   desc.add<std::string>("th_y_cut_mean", "")->setComment("mean of track-association cut in th_y, rad");
-  desc.add<std::string>("th_y_cut_treshold", "")->setComment("threshold of track-association cut in th_y, rad");
+  desc.add<std::string>("th_y_cut_threshold", "")->setComment("threshold of track-association cut in th_y, rad");
 
   desc.add<double>("ti_tr_min", -1.)->setComment("minimum value for timing-tracking association cut");
   desc.add<double>("ti_tr_max", +1.)->setComment("maximum value for timing-tracking association cut");
@@ -40,19 +40,19 @@ std::ostream &operator<<(std::ostream &os, const PPSAssociationCuts::CutsPerArm 
   }
   os << "}" << std::endl << std::endl;
 
-  os << "\ttresholds {";
-  for (auto const &value : cutsPerArm.tresholds_) {
+  os << "\tthresholds {";
+  for (auto const &value : cutsPerArm.thresholds_) {
     os << "\"" << value << "\", ";
   }
   os << "}" << std::endl << std::endl;
 
-  os << "\tf_de_means {";
+  os << "\ts_de_means {";
   for (auto const &value : cutsPerArm.s_de_means_) {
     os << "\"" << value->GetExpFormula() << "\", ";
   }
   os << "}" << std::endl << std::endl;
 
-  os << "\tf_de_tresholds {";
+  os << "\ts_de_thresholds {";
   for (auto const &value : cutsPerArm.s_de_thresholds_) {
     os << "\"" << value->GetExpFormula() << "\", ";
   }
