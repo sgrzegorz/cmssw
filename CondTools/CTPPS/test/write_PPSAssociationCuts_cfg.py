@@ -44,7 +44,7 @@ process.PoolDBOutputService = cms.Service("PoolDBOutputService",
 
 # ESSource
 
-import CalibPPS.ESProducers.ppsAssociationCuts_cff as ac
+import CalibPPS.ESProducers.ppsAssociationCuts_non_DB_cff as ac
 ac.use_single_infinite_iov_entry(ac.ppsAssociationCutsESSource,ac.p2018)
 
 process.ppsAssociationCutsESSource = ac.ppsAssociationCutsESSource
