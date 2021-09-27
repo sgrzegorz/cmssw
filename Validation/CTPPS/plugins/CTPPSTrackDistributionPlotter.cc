@@ -29,6 +29,7 @@
 #include <map>
 #include <memory>
 
+using namespace std;
 //----------------------------------------------------------------------------------------------------
 
 class CTPPSTrackDistributionPlotter : public edm::one::EDAnalyzer<> {
@@ -58,6 +59,10 @@ private:
     std::unique_ptr<TH1D> h_x;
     std::unique_ptr<TH1D> h_y;
     std::unique_ptr<TH1D> h_time;
+    std::unique_ptr<TH2D> h2_de_x_vs_x;  //"delta" refers to distance between two tracks in the SAME RP.
+    std::unique_ptr<TH2D> h2_de_x_vs_y;
+    std::unique_ptr<TH2D> h2_de_y_vs_x;
+    std::unique_ptr<TH2D> h2_de_y_vs_y;
 
     RPPlots() : initialized(false) {}
 
@@ -76,6 +81,11 @@ private:
 
       h_time = std::make_unique<TH1D>("", ";time", 500, -50., +50.);
 
+      h2_de_x_vs_x = std::make_unique<TH2D>("h2_de_x_vs_x", "h2_de_x_vs_x;x;distance in x axis", 300, -30., +30., 300, -3., +3.);
+      h2_de_x_vs_y = std::make_unique<TH2D>("h2_de_x_vs_y", "h2_de_x_vs_y;y;distance in x axis", 300, -30., +30., 300, -3., +3.);
+      h2_de_y_vs_x = std::make_unique<TH2D>("h2_de_y_vs_x", "h2_de_y_vs_x;x;distance in y axis", 300, -30., +30., 300, -3., +3.);
+      h2_de_y_vs_y = std::make_unique<TH2D>("h2_de_y_vs_y", "h2_de_y_vs_y;y;distance in y axis", 300, -30., +30., 300, -3., +3.);
+
       initialized = true;
     }
 
@@ -93,6 +103,10 @@ private:
       h_x->Write("h_x");
       h_y->Write("h_y");
       h_time->Write("h_time");
+      h2_de_x_vs_x->Write("h2_de_x_vs_x");
+      h2_de_x_vs_y->Write("h2_de_x_vs_y");
+      h2_de_y_vs_x->Write("h2_de_y_vs_x");
+      h2_de_y_vs_y->Write("h2_de_y_vs_y");
     }
   };
 
@@ -250,7 +264,7 @@ void CTPPSTrackDistributionPlotter::analyze(const edm::Event& iEvent, const edm:
     CTPPSDetId rpId(trk.rpId());
     unsigned int rpDecId = rpId.arm() * 100 + rpId.station() * 10 + rpId.rp();
     bool rpPixel = (rpId.subdetId() == CTPPSDetId::sdTrackingPixel);
-
+    
     auto& pl = rpPlots[rpDecId];
     if (!pl.initialized)
       pl.init(rpPixel, x_pitch_pixels_);
@@ -285,6 +299,70 @@ void CTPPSTrackDistributionPlotter::analyze(const edm::Event& iEvent, const edm:
     }
   }
 
+  // for (unsigned int i = 0; i < tracks->size(); ++i){
+  //   const auto& tr_i = tracks->at(i);
+  //   CTPPSDetId rpId(tr_i.rpId());
+  //   unsigned int rpDecId = rpId.arm() * 100 + rpId.station() * 10 + rpId.rp();
+
+  //   cout<<" rpId.arm()"<<rpId.arm()<<" rpId.station()"<<rpId.station()<<" rpId.rp()"<<rpId.rp()<<endl;
+  //   cout<<" tr_i.x()"<<tr_i.x()<<" tr_i.y()"<<tr_i.y()<<" tr_i.rpId()"<<tr_i.rpId()<<" rpDecId"<<rpDecId<<" "<<endl;
+  //   cout<<"---------\n";
+  // }
+
+  // for (const auto& t1 : *tracks) {
+  //   const CTPPSDetId rpId1(t1.rpId());
+  //   unsigned int rpDecId1 = rpId1.arm() * 100 + rpId1.station() * 10 + rpId1.rp();
+
+
+  //   for (const auto& t2 : *tracks) {
+  //     const CTPPSDetId rpId2(t2.rpId());
+  //     unsigned int rpDecId2 = rpId2.arm() * 100 + rpId2.station() * 10 + rpId2.rp();
+      
+      
+  //     if (rpDecId1 == rpDecId2 and &t1 != &t2){
+  //       cout<<"!\n";
+        
+  //       rpPlots[rpDecId1].h2_de_x_vs_x->Fill(t1.x(), t1.x() - t2.x());
+
+  //     }
+
+      
+  //   }
+  // }
+
+
+  // // std::cout<<tracks->size()<<endl;
+    for (unsigned int i = 0; i < tracks->size(); ++i) {
+      for (unsigned int j = 0; j < tracks->size(); ++j) {
+        if (i == j)
+          continue;
+
+        
+
+        const auto& tr_i = tracks->at(i);
+        const auto& tr_j = tracks->at(j);
+
+        
+
+        if (tr_i.rpId() != tr_j.rpId()){
+          continue;
+        }
+        
+
+
+        CTPPSDetId rpId(tr_i.rpId());
+        unsigned int rpDecId = rpId.arm() * 100 + rpId.station() * 10 + rpId.rp();
+        // rpPlots[rpDecId].h2_de_x_vs_x->Fill(tr_i.x(), abs(tr_j.x() - tr_i.x()));
+        // rpPlots[rpDecId].h2_de_x_vs_y->Fill(tr_i.y(), abs(tr_j.x() - tr_i.x()));
+        // rpPlots[rpDecId].h2_de_y_vs_x->Fill(tr_i.x(), abs(tr_j.y() - tr_i.y()));
+        // rpPlots[rpDecId].h2_de_y_vs_y->Fill(tr_i.y(), abs(tr_j.y() - tr_i.y()));
+        rpPlots[rpDecId].h2_de_x_vs_x->Fill(tr_i.x(), tr_j.x() - tr_i.x());
+        rpPlots[rpDecId].h2_de_x_vs_y->Fill(tr_i.y(), tr_j.x() - tr_i.x());
+        rpPlots[rpDecId].h2_de_y_vs_x->Fill(tr_i.x(), tr_j.y() - tr_i.y());
+        rpPlots[rpDecId].h2_de_y_vs_y->Fill(tr_i.y(), tr_j.y() - tr_i.y());
+
+      }
+    }
   // update counters
   events_total_++;
 
